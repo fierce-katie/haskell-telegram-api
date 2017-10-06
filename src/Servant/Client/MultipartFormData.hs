@@ -31,7 +31,7 @@ import qualified Network.HTTP.Types.Header  as HTTP
 import           Servant.API
 import           Servant.Common.BaseUrl
 import           Servant.Client
-import           Servant.Common.Req         (Req, catchConnectionError,
+import           Servant.Common.Req         (Req, UrlReq(..), catchConnectionError,
                                              reqAccept, reqToRequest)
 -- | A type that can be converted to a multipart/form-data value.
 class ToMultipartFormData a where
@@ -81,7 +81,7 @@ performRequest' reqToRequest' reqMethod req manager reqHost = do
                    Nothing -> throwError $ InvalidContentTypeHeader (cs t) body
                    Just t' -> pure t'
       unless (status_code >= 200 && status_code < 300) $
-        throwError $ FailureResponse status ct body
+        throwError $ FailureResponse (UrlReq reqHost req) status ct body
       return (status_code, body, ct, hdrs, response)
 
 -- copied `performRequestCT` from servant-0.7.1, then modified so it takes a variant of `reqToRequest`
