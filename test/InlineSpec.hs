@@ -24,11 +24,11 @@ spec token chatId = do
       res `shouldBe` True
     it "should answer with gif" $ do
       Right Response { result = res } <-
-        answerInlineQuery token (answerInlineQueryRequest inline_query_id [inline_gif]) manager
+        answerInlineQuery token (answerInlineQueryRequest inline_query_id [inline_gif Nothing]) manager
       res `shouldBe` True
     it "should answer with mpeg gif" $ do
       Right Response { result = res } <-
-        answerInlineQuery token (answerInlineQueryRequest inline_query_id [inline_mpeg]) manager
+        answerInlineQuery token (answerInlineQueryRequest inline_query_id [inline_mpeg Nothing]) manager
       res `shouldBe` True
     it "should answer with video" $ do
       Right Response { result = res } <-
